@@ -4,6 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import graphs.Sprites;
+import world.World;
+
 public class Player extends Rectangle{
     
     public int spd=4;
@@ -15,21 +18,22 @@ public class Player extends Rectangle{
     }
 
     public void tick(){
-        if(rigth) {
+        if(rigth & World.isFree(x+spd, y)) {
             x+=spd;
-        }else if (left) {
+        }else if (left & World.isFree(x-spd, y)) {
             x-=spd;
         }
 
-        if(up) {
+        if(up & World.isFree(x, y-spd)) {
             y-=spd;
-        } else if(down){
+        } else if(down & World.isFree(x, y+spd)){
             y+=spd;
         }
     }
 
     public void render(Graphics g) {
-        g.setColor(Color.blue);
-        g.fillRect(x,y,width,height);
+        /*g.setColor(Color.blue);
+        g.fillRect(x,y,width,height);*/
+        g.drawImage(Sprites.player_Front, x, y, 32, 32, null);
     }
 }
