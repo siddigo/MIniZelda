@@ -5,7 +5,6 @@ import graphs.Sprites;
 import world.World;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
@@ -15,7 +14,9 @@ import java.awt.image.BufferStrategy;
 import javax.swing.JFrame;
 
 public class Game extends Canvas implements Runnable, KeyListener{
-    public static int WIDTH = 480, HEIGHT = 480;
+    public static int WIDTH = 640, HEIGHT = 480;
+    public static int SCALE = 3;
+
     public Player player;
     public World world;
 
@@ -26,12 +27,13 @@ public class Game extends Canvas implements Runnable, KeyListener{
         new Sprites();
 
         player = new Player(32, 32);
-        world = new World();
+        world = new World(WIDTH, HEIGHT, SCALE);
 
     }
 
     public void tick(){
         player.tick();
+        world.tick();
     }
 
     public void render(){
@@ -42,11 +44,8 @@ public class Game extends Canvas implements Runnable, KeyListener{
         }
         Graphics g = bs.getDrawGraphics();
 
-        g.setColor(Color.black);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
-
-        player.render(g);
         world.render(g);
+        player.render(g);
 
         bs.show();
     }
@@ -83,23 +82,26 @@ public class Game extends Canvas implements Runnable, KeyListener{
 
     @Override
     public void keyTyped(KeyEvent e) {
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-         if(e.getKeyCode()==KeyEvent.VK_RIGHT){
+        if(e.getKeyCode()==KeyEvent.VK_S){
+            player.shoot=true;
+        }
+        
+        if(e.getKeyCode()==KeyEvent.VK_RIGHT){
             player.rigth=true;
-       }
-       else if(e.getKeyCode()==KeyEvent.VK_LEFT){
+        }
+        else if(e.getKeyCode()==KeyEvent.VK_LEFT){
             player.left=true;
-       }
-       if(e.getKeyCode()==KeyEvent.VK_UP){
+        }
+        if(e.getKeyCode()==KeyEvent.VK_UP){
             player.up=true;
-       }
-       else if(e.getKeyCode()==KeyEvent.VK_DOWN){
+        }
+        else if(e.getKeyCode()==KeyEvent.VK_DOWN){
             player.down=true;
-       }
+        }
     }
 
     @Override

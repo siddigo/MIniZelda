@@ -1,8 +1,9 @@
 package world;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
+
+import graphs.Sprites;
 
 public class Blocks extends Rectangle {
     
@@ -11,10 +12,7 @@ public Blocks(int x,int y) {
 }
 
 public void render(Graphics g){
-    g.setColor(Color.magenta);
-    g.fillRect(x, y, width, height);
-    g.setColor(Color.black);
-    g.drawRect(x, y, width, height);
+    g.drawImage(Sprites.tile_wall, x, y, 32, 32, null);
 }
 
 }
