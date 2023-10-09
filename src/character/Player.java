@@ -1,13 +1,13 @@
 package character;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 import graphs.Sprites;
 import world.Bullet;
 import world.World;
+import world.Box;
 
-public class Player extends Rectangle{
+public class Player extends Box{
     
     public int spd=4,shootCoolDown=0;
 
@@ -17,28 +17,30 @@ public class Player extends Rectangle{
     public int curAnimation=0;
     public int curFrames=0, targetFrames=15;
 
-    public Player(int x, int y){
-        super(x,y,32,32);
+    private String id="PLAYER";
+
+    public Player(int x, int y, int w, int h){
+        super(x,y,w,h);
     }
 
     public void tick(){
         boolean movedVertical=false;
         boolean movedHorizontal=false;
 
-        if(rigth & World.isFree(x+spd, y,32,32)) {
+        if(rigth & World.isFree(this)) {
             x+=spd;
             movedHorizontal=true;
             dir=1;
-        }else if (left & World.isFree(x-spd, y,32,32)) {
+        }else if (left & World.isFree(this)) {
             x-=spd;
             movedHorizontal=true;
             dir=-1;
         }
 
-        if(up & World.isFree(x, y-spd,32,32)) {
+        if(up & World.isFree(this)) {
             y-=spd;
             movedVertical=true;
-        } else if(down & World.isFree(x, y+spd,32,32)){
+        } else if(down & World.isFree(this)){
             y+=spd;
             movedVertical=true;
         }
@@ -76,4 +78,13 @@ public class Player extends Rectangle{
         g.drawImage(Sprites.player_Front[curAnimation], x, y, 32, 32, null);
 
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+    
 }

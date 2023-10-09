@@ -1,14 +1,11 @@
 package world;
 
-import java.awt.Rectangle;
 import java.awt.Color;
 import java.awt.Graphics;
-import graphs.Sprites;
 
-public class Bullet extends Rectangle {
+public class Bullet extends Box {
     
     public int dir=1,speed=8;
-
     public int frames=0;
 
     public Bullet(int x,int y,int dir) {
@@ -22,7 +19,7 @@ public class Bullet extends Rectangle {
             World.bullets.remove(this);
         }
 
-        if (World.isFree(x, y,10,5)) {
+        if (World.isFree(this)) {
             x+=speed*dir;
         }
         else {
